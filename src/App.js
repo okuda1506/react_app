@@ -14,40 +14,39 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.state ={
-			list: this.data
+			title: 'input form',
+			message: 'type your name.'
 		}
-		this.doAction = this.doAction.bind(this)
+		this.doChange = this.doChange.bind(this)
+		this.doSubmit = this.doSubmit.bind(this)
 	}
 
-	doAction(e){
-		let x = e.pageX
-		let y = e.pageY
-		this.data.push({x:x, y:y})
+	doChange(event){
+		this.input = event.target.value
+	}
+
+	doSubmit(event){
 		this.setState({
-			list:this.data
+			title: 'send form',
+			message: 'Hello, ' + this.input + '!!'
 		})
-	}
-
-	draw(d){
-		let s = {
-			position:"absolute",
-			left:(d.x - 25) + "px",
-			top:(d.y - 25) + "px",
-			width:"50px",
-			height:"50px",
-			backgroundColor:"#66f3",
-		}
-		
-		return <div style={s}></div>
+		event.preventDefault()
 	}
 
 	render(){
-		return  <div>
-			<h1 className="bg-primary text-white display-4">React</h1>  
+		return <div>
+			<h1 className="bg-primary text-white display-4">React</h1>
 			<div className="container">
-				<p className="subtitle">draw rectangle.</p>
-				<div style={this.area} onClick={this.doAction}>
-					{this.data.map((value)=>this.draw(value))}
+				<h4>{this.state.title}</h4>
+				<p className="card h5 p-3">{this.state.message}</p>
+				<div className="alert alert-primary mt-3">
+					<form onSubmit={this.doSubmit}>
+						<div className="form-group">
+							<label>Message:</label>
+							<input type="text" className="form-control" onChange={this.doChange} />
+						</div>
+						<input type="submit" className="btn btn-primary" value="Click" />
+					</form>
 				</div>
 			</div>
 		</div>
